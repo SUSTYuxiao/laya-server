@@ -1,6 +1,6 @@
 """laya-core + server 全链路测试。
 
-用法：uv run test_core.py
+用法：uv run python -m test.test_core
 覆盖：
   1. core 层直接调用（choice / noul / score 三种问题类型）
   2. FastAPI /v1/health

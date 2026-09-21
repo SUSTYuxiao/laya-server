@@ -7,5 +7,6 @@ requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.141.1",
     "laya-mlx>=0.1.0",
+    "typesafe-sdk>=0.7.1",
     "uvicorn>=0.53.0",
 ]

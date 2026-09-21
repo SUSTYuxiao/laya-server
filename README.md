@@ -9,11 +9,15 @@ laya-server/
 ├── laya_core.py    # core 层：模型单例 + 输入校验 + predict 入口（内嵌用法见 core-use.md）
 ├── jev_adapter.py  # JEV 适配器：laya 格式 -> typesafe.ai 契约（纯函数，不依赖 core）
 ├── server.py       # server 层：FastAPI，/v1/predict（laya 原生）、/v1/systemone（JEV 风格）、/v1/health
-├── test_core.py    # 全链路测试：core 直调 + adapter 纯函数 + TestClient（含 JEV 端点用例）
-├── test_laya.py    # 最小示例：不经封装直接调 laya_mlx（对照用）
+├── sdk_demo.py     # TypeSafe Python SDK 示例：默认直连本地 /v1/systemone
+├── test/           # 测试目录：手动全链路与模型对照脚本
+│   ├── __init__.py # 测试包标记，保证从项目根以模块方式运行
+│   ├── AGENTS.md   # 测试目录职责、文件说明与运行方式
+│   ├── test_core.py # 全链路测试：core 直调 + adapter 纯函数 + TestClient（含 JEV 端点用例）
+│   └── test_laya.py # 最小示例：不经封装直接调 laya_mlx（对照用）
 ├── use.md          # HTTP API 用法与设计（端点、请求/响应示例、JEV 端点差异、设计说明）
 ├── core-use.md     # 内嵌调用指南（不需要网关，Python 应用直接 import laya_core）
-├── pyproject.toml  # uv 项目，依赖 laya-mlx / fastapi / uvicorn
+├── pyproject.toml  # uv 项目，依赖 laya-mlx / fastapi / uvicorn / typesafe-sdk
 └── uv.lock
 ```
 
@@ -23,7 +27,7 @@ laya-server/
 
 ```bash
 uv sync                # 安装依赖
-uv run test_core.py    # 全链路测试（首次拉模型快照约 1 分钟，仅一次）
+uv run python -m test.test_core # 全链路测试（首次拉模型快照约 1 分钟，仅一次）
 uv run server.py       # 起服务 -> http://127.0.0.1:15666
 ```
 

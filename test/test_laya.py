@@ -1,7 +1,7 @@
 """laya-mlx 本地推理测试：分类 + 布尔判断两类问题。
 
 首次运行会从 HuggingFace 下载 aac6fef/laya-mlx 模型快照，之后走本地缓存。
-运行：uv run test_laya.py
+运行：uv run python -m test.test_laya
 """
 
 import json

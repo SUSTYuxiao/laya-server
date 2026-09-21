@@ -8,7 +8,7 @@ Laya 是跑在 Apple Silicon（MLX）上的本地决策小模型：输入一段�
 
 ```bash
 uv sync                          # 安装依赖
-uv run test_core.py              # 跑通 core + server 全链路测试（首次会拉模型快照，约 1 分钟）
+uv run python -m test.test_core # 跑通 core + server 全链路测试（首次会拉模型快照，约 1 分钟）
 uv run server.py                 # 起服务，默认 0.0.0.0:15666
 ```
 
@@ -232,6 +232,33 @@ curl -s http://127.0.0.1:15666/v1/systemone \
 | answers 中的 `action` | 有（`act_probability`） | 无 |
 | noul 的 `confidence` | 有 | 无（只返回 `type` + `noul`） |
 | 其余（校验规则、错误码 400/422） | 相同 | 相同 |
+
+### SDK demo
+
+```bash
+uv sync
+uv run server.py
+```
+
+另开一个终端，运行 Python SDK demo：
+
+配置优先级为：命令行参数 > 环境变量 > 默认值。默认连接 `http://127.0.0.1:15666`，默认 API key 为 `local`。
+
+显式指定参数：
+
+```bash
+uv run sdk_demo.py --base-url http://127.0.0.1:15666 --api-key local
+```
+
+或使用环境变量兜底：
+
+```bash
+export TYPESAFE_BASE_URL=http://127.0.0.1:15666
+export TYPESAFE_API_KEY=local
+uv run sdk_demo.py
+```
+
+demo 位于根目录 [sdk_demo.py](sdk_demo.py)，用 `Choice` / `Noul` / `Score` 覆盖三种问题类型。`local` 只是 SDK 请求本地服务所需的占位 key；访问外部官方 API 时仍需设置真实 `TYPESAFE_API_KEY`。
 
 ---
 
